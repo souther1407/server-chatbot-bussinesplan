@@ -1,4 +1,4 @@
-const toolList = `[Canva, Online design tool for graphics, presentations, and videos., (Design a social media post/Create a custom logo for the business brand./Generate an eye-catching Instagram story template./Develop a visually engaging YouTube thumbnail./Craft an event invitation for online promotion./Customize a presentation slide deck template./Design a flyer for a product launch or event./Produce an infographic for data presentation./Generate an AD creative)]
+export const toolList = `[Canva, Online design tool for graphics, presentations, and videos., (Design a social media post/Create a custom logo for the business brand./Generate an eye-catching Instagram story template./Develop a visually engaging YouTube thumbnail./Craft an event invitation for online promotion./Customize a presentation slide deck template./Design a flyer for a product launch or event./Produce an infographic for data presentation./Generate an AD creative)]
 [Midjourney, Versatile text-to-image service for AI artwork creation from textual descriptions., (Generate graphics for product Ads./Generate graphics for social media posts./Generate custom art for video content./Create logo concepts.)]
 [ChatGPT, AI-powered language model for copywriting and content creation, enhancing productivity and engagement., (Social Media Post Copywriting, Draft Email Outreach Templates, Create Ad Copy, Website Copywriting)]
 [Shopify, Comprehensive e-commerce platform for easy online store setup and global reach., (Add new products with descriptions and images./Customize website theme for branding and user experience./Process orders efficiently for timely shipping./Update product inventory to prevent stock issues./Configure secure payment gateways for transactions./Manage customer orders for service efficiency./Analyze sales reports for informed decisions.)]
@@ -44,63 +44,90 @@ const toolList = `[Canva, Online design tool for graphics, presentations, and vi
 [DocuSign, Electronic signature platform for signing and managing documents digitally., (Upload and prepare a document for signature by adding signature fields in DocuSign./Send the prepared document to multiple recipients for their electronic signatures using DocuSign.)]
 [Google Docs, Cloud-based document editing and collaboration tool for teams., (Create and edit text documents in real-time)]Descripciones(Esto es lo que ve el usuario en la derecha)`;
 
-const init = `You are a very smart chatbot specialized in resolve problems using the Hierarchical Task Network
+export const init = `You are a very smart chatbot specialized in resolve problems using the Hierarchical Task Network
 (HTN) planning technique`;
 
-const prompt1 = `## Objective State:
+export const prompt1 = `## Objective State:
 {description}
-
 ## Current State:
-No progress yet toward the objective
+No progress yet toward the objective state.
+
+## Task 1
+Think deeply and create a list of 10
+distinct properties my objective state
+has. Then, do the same for my current
+state, and the world state. For the
+world state focus on properties related
+to my target customer.
+
+## Task 2
+Then, create a list of the 4 most
+important goals I would need to
+achieve to successfully go from my
+current state to my objective state.
+### Rules Task 2:
+1.Give a thoughtful business
+explanation of why each of the 4 goals
+you included is necessary for me to get
+to my objective state. The result of
+completing the 4 goals should be
+sufficient to take me from my current
+state to fully achieving the objective
 state.
+2. Make sure you understand clearly
+what the objective state is.`;
 
-## Task
-Think deeply and create a list of 10 distinct properties my objective 
-state has. Then, do the same for my current state, and the world state. For the
-world state focus on properties related to my target customer.
-Then, create a list of the 4 most important goals I would need to
-achieve to successfully go from my current state to my objective state.
+export const jsonGoalsExplination = `return the explanation for each of the 4 goals in the following JSON format:
+{
+    "Goal1":explanation,
+    "Goal2":explanation,
+    "Goal3:explanation,
+    "Goal4":explanation
+}
 
-## Rules:
-1.Give a thoughtful business explanation of why each of the 4 goals
-you included is necessary for me to get to my objective state. The result of
-completing the 4 goals should be sufficient to take me from my current
-state to fully achieving the objective state.
-2. Make sure you understand clearly what the objective state is.
-
-Return the explanation for each of the 4 goal in Json format.`;
-
-const prompt2 = `## Objective State:
+just return the json`;
+export const prompt2 = `## Objective State:
 {description}
 
 ## Current State:
 No progress yet toward the objective.
 
 ## Task:
-Using a Hierarchical Task Network (HTN) planning technique develop a
-sound plan that successfully takes me from my current state to the
-objective state. To do this, decompose each of the 4 goals into
-2-3 distinct High-level tasks. Each High-level task is composed of
-multiple simple and easy-to-follow primitive tasks.
+Using a Hierarchical Task Network
+(HTN) planning technique develop a
+sound plan that successfully takes
+me from my current state to the
+objective state. To do this,
+decompose each of the 4 goals into
+2-3 distinct High-level tasks. Each
+High-level task is composed of
+multiple simple and easy-to-follow
+primitive tasks.
 
 ### Definitions:
-Primitive Task: Define a primitive task as a task that an 18-year-old
-entrepreneur can fully execute in under 45 minutes.
+Primitive Task: Define a primitive task
+as a task that an 18-year-old
+entrepreneur can fully execute in
+under 45 minutes.
 
 ## Rules:
-1. Make sure you understand clearly what the objective state is.
+1. Make sure you understand clearly
+what the objective state is.
+2. For each goal choose High-level
+tasks that will most successfully get
+me from my current state to the
+objective state.
+3. Everything in the plan should be
+written as direct instruction.
+4. The reader is an aspiring
+entrepreneur, do not assume he
+understands how to follow ambiguous
+instructions.
 
-2. For each goal choose High-level tasks that will most successfully get
-me from my current state to the objective state.
+OUTPUT: Markdown format with
+##H2, ###H3, + bullet points`;
 
-3. Everything in the plan should be written as direct instruction.
-
-4. The reader is an aspiring entrepreneur, do not assume he
-understands how to follow ambiguous instructions.
-
-OUTPUT: Markdown format with ##H2, ###H3, + bullet points`;
-
-const prompt3 = `I am about to feed you a list of online
+export const prompt3 = `I am about to feed you a list of online
 tools that people can use to solve business tasks. All of them are real
 tools, not fictional examples. Some of these tools are from 2021-2023 so,
 normally, you don´t know about them yet. I will give them to you in the
@@ -111,72 +138,332 @@ database, after I give them to you say
 
 ${toolList}`;
 
-const prompt4 = `## Objective State:
+export const prompt4 = `## Objective State:
 {description}
 
 ## Current State:
 No progress yet toward the objective.
 
 ## World State properties:
-Human beings have limited time and motivation, so learning
-how to use too many new tools is never an option.
+Human beings have limited time and motivation, so learning how to
+use too many new tools is never an option.
 
 ## Task:
-Create a plan that successfully takes me as far away from
-my current state and gets me as close as possible to the
-objective state. To do this, increase the number of primitive
-tasks within each high-level task by adding some from the
-business tools database.
+Create a plan that successfully takes me as far away from my
+current state and gets me as close as possible to the objective
+state. To do this, increase the number of primitive tasks within
+each high-level task by adding some from the business tools
+database.
 
 ### Output Example:
 Here is an example of the minimum level of specificity and
-customization I am looking for in your output within a Highlevel Task. If necessary reduce the number of High-level
-tasks within each goal. Example:
+customization I am looking for in your output within a High-level
+Task. If necessary reduce the number of High-level tasks within
+each goal. Example:
 ““High-level task: Run an Ads Campaign
-1.Once you have a clear profile of your target customer, go
-to Facebook Ads. Facebook Ads is an advertising tool for
-targeted ads on popular social media platforms.
+1.Once you have a clear profile of your target customer, go to
+Facebook Ads. Facebook Ads is an advertising tool for targeted
+ads on popular social media platforms.
 2. Once you are on Facebook Ads, select the objective of your Ad.
-3. Once you select an objective, select the audience that
-your Ad will reach. Here is where your target customer
-profile will come in handy.
-4. Any Ad has 2 components the Copy and the Creative.
-For the copy, you can write it yourself, or if you are lazy
-you can use Chatgpt. For the creative, you can design it
-manually on Canva or create some quick AI art using
-Midjourney.
+3. Once you select an objective, select the audience that your Ad
+will reach. Here is where your target customer profile will come in
+handy.
+4. Any Ad has 2 components the Copy and the Creative. For the
+copy, you can write it yourself, or if you are lazy you can use
+Chatgpt. For the creative, you can design it manually on Canva or
+create some quick AI art using Midjourney.
 5. After completing tasks 1,23, and 4 publish your Ad.
-6. Take advantage of the data you collect, and if possible
-run A/B tests until you find a winner Ad.””
+6. Take advantage of the data you collect, and if possible run A/B
+tests until you find a winner Ad.””
 
 ### Definitions:
-Primitive Task: Define a primitive task as a task that an 18-
-year-old entrepreneur can fully execute in under 45
-minutes.
+Primitive Task: Define a primitive task as a task that an 18-year-old
+entrepreneur can fully execute in under 45 minutes.
 
 ## Rules:
-1. Create a plan that includes more than 30 primitive tasks, but includes less than 8 tools.
-2. Make sure you understand clearly what the purpose of each of the 4 goals is on achieving the objective state.
+1. Create a plan that includes more than 30 primitive tasks, but
+includes less than 6 tools.
+2. Make sure you understand clearly what the purpose of each of
+the 4 goals is on achieving the objective state.
 3. Everything in the plan should be written as direct instruction.
-4. Each primitive task should be as detailed as possible, do not assume the reader understands how to follow
-ambiguous 1-line instructions.
-5. Everything should be written in a formal tone and be easy to understand.
-6. Only around half of primitive tasks should involve a tool from the database.
+4. Each primitive task should be as detailed as possible, do not
+assume the reader understands how to follow ambiguous 1-line
+instructions.
+5. Everything should be written in a formal tone and be easy to
+understand.
+6. Only around half of primitive tasks should involve a tool from the
+database.
 7. Make sure you understand clearly what the objective state is.`;
 
-const toolsSelected = `Identify the main tool you used for each of the 4 goals. After you identified them, return them
+export const jsonSteps = `return a title for each of the 4 goals as well as the steps and substeps for each goal in the following JSON format:
+{
+    "Goal1": {
+        "title":title of the goal,
+        "steps": [
+            {
+                "title":name of the step, 
+                "steps": [
+                    {"title":name of the substep},
+                    {"title":name of the substep},
+                    ...
+                ]
+            },
+            {
+                "title":name of the step, 
+                "steps": [
+                    {"title":name of the substep},
+                    {"title":name of the substep},
+                    ...
+                ]
+            },
+            ...
+        ]
+    },
+    "Goal2": {
+        "title":title of the goal,
+        "steps": [
+            {
+                "title":name of the step, 
+                "steps": [
+                    {"title":name of the substep},
+                    {"title":name of the substep},
+                    ...
+                ]
+            },
+            {
+                "title":name of the step, 
+                "steps": [
+                    {"title":name of the substep},
+                    {"title":name of the substep},
+                    ...
+                ]
+            },
+            ...
+        ]
+    },
+    "Goal3": {
+        "title":title of the goal,
+        "steps": [
+            {
+                "title":name of the step, 
+                "steps": [
+                    {"title":name of the substep},
+                    {"title":name of the substep},
+                    ...
+                ]
+            },
+            {
+                "title":name of the step, 
+                "steps": [
+                    {"title":name of the substep},
+                    {"title":name of the substep},
+                    ...
+                ]
+            },
+            ...
+        ]
+    },
+    "Goal4": {
+        "title":title of the goal,
+        "steps": [
+            {
+                "title":name of the step, 
+                "steps": [
+                    {"title":name of the substep},
+                    {"title":name of the substep},
+                    ...
+                ]
+            },
+            {
+                "title":name of the step, 
+                "steps": [
+                    {"title":name of the substep},
+                    {"title":name of the substep},
+                    ...
+                ]
+            },
+            ...
+        ]
+    }
+}
+
+Here is an example of the output:
+
+{
+    "Goal1": {
+
+        "title":"Industry Research and Expertise Development"
+        "steps":[
+            {
+                "title":"Conduct In-depth Fitness Industry Research",
+                "steps":[
+                    {
+                        "title":"Review high school curricula in Canada. Review high school curricula in Canada."
+                    },
+                    {
+                        "title":"Determine the most common subjects and topics"
+                    }
+                ]
+            },
+            {
+                "title":"Engage in Community Forums and Social Media",
+                "steps":[
+                    {
+                        "title":"Define clear learning objectives for each lesson."
+                    },
+                    {
+                        "title":"Develop a structured outline for each lesson."
+                    }
+                ]
+            },
+            {
+                "title":"Customer Behavior and Trends Analysis",
+                "steps":[
+                    {
+                        "title":"Define clear learning objectives for each lesson"
+                    },
+                    {
+                        "title":"Develop a structured outline for each lesson."
+                    }
+                ]
+            }
+        ]
+    },
+    "Goal2": {
+
+        "title":"Industry Research and Expertise Development"
+        "steps":[
+            {
+                "title":"Conduct In-depth Fitness Industry Research",
+                "steps":[
+                    {
+                        "title":"Review high school curricula in Canada. Review high school curricula in Canada."
+                    },
+                    {
+                        "title":"Determine the most common subjects and topics"
+                    }
+                ]
+            },
+            {
+                "title":"Engage in Community Forums and Social Media",
+                "steps":[
+                    {
+                        "title":"Define clear learning objectives for each lesson."
+                    },
+                    {
+                        "title":"Develop a structured outline for each lesson."
+                    }
+                ]
+            },
+            {
+                "title":"Customer Behavior and Trends Analysis",
+                "steps":[
+                    {
+                        "title":"Define clear learning objectives for each lesson"
+                    },
+                    {
+                        "title":"Develop a structured outline for each lesson."
+                    }
+                ]
+            }
+        ]
+    },
+    "Goal3": {
+
+        "title":"Industry Research and Expertise Development"
+        "steps":[
+            {
+                "title":"Conduct In-depth Fitness Industry Research",
+                "steps":[
+                    {
+                        "title":"Review high school curricula in Canada. Review high school curricula in Canada."
+                    },
+                    {
+                        "title":"Determine the most common subjects and topics"
+                    }
+                ]
+            },
+            {
+                "title":"Engage in Community Forums and Social Media",
+                "steps":[
+                    {
+                        "title":"Define clear learning objectives for each lesson."
+                    },
+                    {
+                        "title":"Develop a structured outline for each lesson."
+                    }
+                ]
+            },
+            {
+                "title":"Customer Behavior and Trends Analysis",
+                "steps":[
+                    {
+                        "title":"Define clear learning objectives for each lesson"
+                    },
+                    {
+                        "title":"Develop a structured outline for each lesson."
+                    }
+                ]
+            }
+        ]
+    },
+    "Goal4": {
+
+        "title":"Industry Research and Expertise Development"
+        "steps":[
+            {
+                "title":"Conduct In-depth Fitness Industry Research",
+                "steps":[
+                    {
+                        "title":"Review high school curricula in Canada. Review high school curricula in Canada."
+                    },
+                    {
+                        "title":"Determine the most common subjects and topics"
+                    }
+                ]
+            },
+            {
+                "title":"Engage in Community Forums and Social Media",
+                "steps":[
+                    {
+                        "title":"Define clear learning objectives for each lesson."
+                    },
+                    {
+                        "title":"Develop a structured outline for each lesson."
+                    }
+                ]
+            },
+            {
+                "title":"Customer Behavior and Trends Analysis",
+                "steps":[
+                    {
+                        "title":"Define clear learning objectives for each lesson"
+                    },
+                    {
+                        "title":"Develop a structured outline for each lesson."
+                    }
+                ]
+            }
+        ]
+    }
+}
+
+just return the json`;
+export const toolsSelected = `Identify the main tool you used for each of the 4 goals. After you identified them, return them
 in the following JSON format:
 {
-toolgoal1:name,
-toolgoal2:name,
-toolgoal3:name,
-toolgoal4:name,
+"Goal1":name,
+"Goal2":name,
+"Goal3:name,
+"Goal4":name
 }
 
 Here is an example of the output:
 {
-"toolgoal1":"Canva",
-"toolgoal2":"ChatGPT",
-"toolgoal3":"Shopify",
-"toolgoal4":"Zoom",
-}`;
+"Goal1":"Canva",
+"Goal2":"ChatGPT",
+"Goal3":"Shopify",
+"Goal4":"Zoom"
+}
+
+just return the json`;

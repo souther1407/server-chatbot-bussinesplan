@@ -1,4 +1,5 @@
 import { test as testService } from "../services/openai.js";
+import { generateResult } from "../promptGenerator/promptGenerator.js";
 export const test = async (req, res) => {
   try {
     const { msg } = req.body;
@@ -9,8 +10,11 @@ export const test = async (req, res) => {
   }
 };
 
-export const generatePlan = (req, res) => {
+export const generatePlan = async (req, res) => {
   try {
+    const { msg } = req.body;
+    const result = await generateResult(msg);
+    res.status(200).json({ result });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

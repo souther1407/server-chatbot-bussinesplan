@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { test } from "../controllers/plans.js";
+import { test, generatePlan } from "../controllers/plans.js";
 const router = Router();
 
-router.post("/generate");
+router.post("/generate", generatePlan);
 router.get("/getAll");
 router.post("/test", test);
 
