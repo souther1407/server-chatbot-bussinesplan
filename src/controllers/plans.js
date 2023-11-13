@@ -1,5 +1,6 @@
 import { test as testService } from "../services/openai.js";
 import { generateResult } from "../promptGenerator/promptGenerator.js";
+import { createPlan } from "../managers/plans.js";
 export const test = async (req, res) => {
   try {
     const { msg } = req.body;
@@ -13,8 +14,10 @@ export const test = async (req, res) => {
 export const generatePlan = async (req, res) => {
   try {
     const { msg } = req.body;
-    const result = await generateResult(msg);
-    res.status(200).json({ result });
+    const user = req.user;
+    const steps = await generateResult(msg);
+    const newPlan = await createPlan({ user, msg, steps });
+    res.status(200).json(newPlan);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

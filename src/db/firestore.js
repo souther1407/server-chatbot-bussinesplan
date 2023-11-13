@@ -1,5 +1,6 @@
 import { initializeApp, cert } from "firebase-admin/app";
 import { initializeFirestore } from "firebase-admin/firestore";
+import { getAuth } from "firebase-admin/auth";
 import config from "../config/config.js";
 
 const objConfig = {
@@ -20,5 +21,5 @@ const firebaseApp = initializeApp({
   serviceAccountId: objConfig.client_email,
   projectId: objConfig.projectId,
 });
-
+export const auth = getAuth(firebaseApp);
 export const database = initializeFirestore(firebaseApp);

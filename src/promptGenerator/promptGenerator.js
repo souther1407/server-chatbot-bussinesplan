@@ -1,5 +1,6 @@
 import { generate } from "../services/openai.js";
 import * as PROMPTS from "../prompts/prompts.js";
+
 export const generateResult = async (prompt) => {
   const messages = [{ role: "system", content: PROMPTS.init }];
   let parsedPrompts = {
@@ -35,9 +36,6 @@ export const generateResult = async (prompt) => {
   messages.push({ role: "user", content: parsedPrompts.toolsSelected });
 
   const resultToolsUsedJson = await generate(messages);
-  console.log("tools", resultToolsUsedJson);
-  console.log("steps", resultJsonSteps);
-  console.log("description", resultDescriptionsJson);
 
   const parsedToolsUsedJson = JSON.parse(resultToolsUsedJson);
   const parsedStepsJson = JSON.parse(resultJsonSteps);
