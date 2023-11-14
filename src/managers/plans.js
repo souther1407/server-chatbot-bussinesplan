@@ -34,3 +34,9 @@ export const getAll = async (user) => {
     .get();
   return results.docs.map((d) => d.data());
 };
+
+export const getById = async ({ user, planId }) => {
+  const currentUser = await getUserorCreate(user);
+  const plan = await currentUser.collection(PLANS).doc(planId).get();
+  return plan.data();
+};
