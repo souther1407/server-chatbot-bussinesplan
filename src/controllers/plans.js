@@ -31,7 +31,7 @@ export const getAll = async (req, res) => {
   try {
     const user = req.user;
     const plans = await get(user);
-    res.status(400).json(plans);
+    res.status(200).json(plans);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

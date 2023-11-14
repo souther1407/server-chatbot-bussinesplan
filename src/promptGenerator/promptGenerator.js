@@ -36,7 +36,6 @@ export const generateResult = async (prompt) => {
   messages.push({ role: "user", content: parsedPrompts.toolsSelected });
 
   const resultToolsUsedJson = await generate(messages);
-
   const parsedToolsUsedJson = JSON.parse(resultToolsUsedJson);
   const parsedStepsJson = JSON.parse(resultJsonSteps);
   const parsedDescriptionsJson = JSON.parse(resultDescriptionsJson);

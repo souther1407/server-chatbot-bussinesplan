@@ -85,7 +85,7 @@ export const jsonGoalsExplination = `return the explanation for each of the 4 go
     "Goal4":explanation
 }
 
-just return the json`;
+just return the json without markdown format`;
 export const prompt2 = `## Objective State:
 {description}
 
@@ -448,7 +448,7 @@ Here is an example of the output:
     }
 }
 
-just return the json`;
+just return the json without markdown format`;
 export const toolsSelected = `Identify the main tool you used for each of the 4 goals. After you identified them, return them
 in the following JSON format:
 {
@@ -466,4 +466,4 @@ Here is an example of the output:
 "Goal4":"Zoom"
 }
 
-just return the json`;
+just return the json without markdown format`;
