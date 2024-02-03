@@ -17,11 +17,8 @@ export const test = async (req, res) => {
 
 export const generatePlan = async (req, res) => {
   try {
-    const { msg } = req.body;
-    const user = req.user;
-    const steps = await generateResult(msg);
-    const newPlan = await createPlan({ user, msg, steps });
-    res.status(200).json(newPlan);
+    const plan = await generateResult(req.body);
+    res.status(200).json(plan);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

@@ -4,7 +4,7 @@ const chatgpt = new OpenAi({ apiKey: config.base.openaiApiKey });
 
 export const test = async (prompt) => {
   const response = await chatgpt.chat.completions.create({
-    model: "gpt-3.5-turbo-1106",
+    model: "gpt-4-turbo-preview",
     temperature: 0,
     messages: [
       { role: "system", content: "Eres un asistente muy inteligente" },
@@ -16,7 +16,7 @@ export const test = async (prompt) => {
 
 export const generate = async (messages, temperature = 0.5) => {
   const response = await chatgpt.chat.completions.create({
-    model: "gpt-3.5-turbo-1106",
+    model: "gpt-4",
     temperature,
     messages,
   });

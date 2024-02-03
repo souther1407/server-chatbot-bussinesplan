@@ -1,51 +1,37 @@
 import { generate } from "../services/openai.js";
-import * as PROMPTS from "../prompts/prompts.js";
+import { INITIAL_PROMPT, ROLE } from "../prompts/prompts.js";
 
-export const generateResult = async (prompt) => {
-  const messages = [{ role: "system", content: PROMPTS.init }];
-  let parsedPrompts = {
-    ...PROMPTS,
+export const generateResult = async (body) => {
+  const parsedPrompts = {};
+  for (let p in INITIAL_PROMPT) {
+    parsedPrompts[p] = INITIAL_PROMPT[p]
+      .replace("{msg}", body.msg)
+      .replace("{budget}", body.budget);
+  }
+  const conversation = [
+    {
+      role: "system",
+      content: ROLE,
+    },
+    {
+      role: "user",
+      content: parsedPrompts.prompt1,
+    },
+  ];
+
+  const resultPrompt1 = await generate(conversation);
+  conversation.push({ role: "assistant", content: resultPrompt1 });
+  conversation.push({ role: "user", content: parsedPrompts.prompt2 });
+  const jsonResult2 = await generate(conversation);
+  console.log("json generado", jsonResult2);
+  const parsedJson = JSON.parse(jsonResult2);
+  conversation.push({ role: "assistant", content: jsonResult2 });
+  conversation.push({
+    role: "user",
+    content: parsedPrompts[parsedJson.strategy],
+  });
+  const finalResult = await generate(conversation);
+  return {
+    result: finalResult,
   };
-  for (const p in parsedPrompts) {
-    parsedPrompts[p] = parsedPrompts[p].replace("{description}", prompt);
-  }
-  messages.push({ role: "user", content: parsedPrompts.prompt1 });
-
-  const resultPrompt1 = await generate(messages);
-  messages.push({ role: "assistant", content: resultPrompt1 });
-  messages.push({ role: "user", content: parsedPrompts.jsonGoalsExplination });
-
-  const resultDescriptionsJson = await generate(messages);
-  messages.push({ role: "assistant", content: resultDescriptionsJson });
-  messages.push({ role: "user", content: parsedPrompts.prompt2 });
-
-  const resultPrompt2 = await generate(messages);
-  messages.push({ role: "assistant", content: resultPrompt2 });
-  messages.push({ role: "user", content: parsedPrompts.prompt3 });
-
-  const resultPrompt3 = await generate(messages);
-  messages.push({ role: "assistant", content: resultPrompt3 });
-  messages.push({ role: "user", content: parsedPrompts.prompt4 });
-
-  const resultPrompt4 = await generate(messages);
-  messages.push({ role: "assistant", content: resultPrompt4 });
-  messages.push({ role: "user", content: parsedPrompts.jsonSteps });
-
-  const resultJsonSteps = await generate(messages);
-  messages.push({ role: "assistant", content: resultJsonSteps });
-  messages.push({ role: "user", content: parsedPrompts.toolsSelected });
-
-  const resultToolsUsedJson = await generate(messages);
-  const parsedToolsUsedJson = JSON.parse(resultToolsUsedJson);
-  const parsedStepsJson = JSON.parse(resultJsonSteps);
-  const parsedDescriptionsJson = JSON.parse(resultDescriptionsJson);
-
-  for (let goal in parsedStepsJson) {
-    parsedStepsJson[goal] = {
-      ...parsedStepsJson[goal],
-      description: parsedDescriptionsJson[goal],
-      tool: parsedToolsUsedJson[goal],
-    };
-  }
-  return parsedStepsJson;
 };
