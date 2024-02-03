@@ -20,6 +20,7 @@ export const generateResult = async (body) => {
   ];
 
   const resultPrompt1 = await generate(conversation);
+  console.log("RESULT1", resultPrompt1);
   conversation.push({ role: "assistant", content: resultPrompt1 });
   conversation.push({ role: "user", content: parsedPrompts.prompt2 });
   const jsonResult2 = await generate(conversation);
@@ -33,5 +34,7 @@ export const generateResult = async (body) => {
   const finalResult = await generate(conversation);
   return {
     result: finalResult,
+    strategy: parsedJson.strategy,
+    product: body.msg,
   };
 };
