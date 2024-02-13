@@ -16,7 +16,7 @@ export const test = async (prompt) => {
 
 export const generate = async (messages, temperature = 0.5) => {
   const response = await chatgpt.chat.completions.create({
-    model: "gpt-4",
+    model: "gpt-4-turbo-preview",
     temperature,
     messages,
   });
