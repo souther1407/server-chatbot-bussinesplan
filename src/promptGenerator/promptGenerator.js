@@ -32,6 +32,7 @@ export const generateResult = async (body) => {
     content: parsedPrompts[parsedJson.strategy],
   });
   const finalResult = await generate(conversation);
+  console.log(finalResult);
   return {
     result: finalResult,
     strategy: parsedJson.strategy,

@@ -156,7 +156,7 @@ Target Audience: Your phone or social media contacts.
 Product/Service Suitability: Optimal for any type of product
 Budget Considerations: Optimal if the budget is less than $100, or no existent.
 
-### “B2B Lead Generation”
+### “Linkedin Lead Generation”
 Best strategy for B2B businesses. Requires a high budget.
 
 ### “Google Maps Ads”
@@ -361,11 +361,11 @@ If the chosen strategy was “Influencer Marketing: Store Credit”, the result 
   ## Task:
   Marketing Plan that generates warm leads for my product/service. The plan should be doable without money
   expenses, and be very detailed and creative. This plan should leverage the use of Google Business profile.`,
-  "Google Search Ads": `## Product/Service:
+  "Google Ads Search": `## Product/Service:
   {msg}
   ## Task:
   Marketing Plan that generates warm leads for my product/service. The plan should be very detailed and creative.
-  This plan should leverage the use of Google Search Ads.`,
+  This plan should leverage the use of Google Ads Search.`,
   "Linkedin Lead Generation": `## Product/Service:
   {msg}
   ## Task:
